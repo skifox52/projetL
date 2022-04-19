@@ -1,6 +1,7 @@
 $primary-color: crimson;
 $secondary-color: #333;
-$font-color: hsl(0, 0%, 10%);
+$font-color: hsl(0, 0%, 89%);
+$background-color: hsl(245, 10%, 11%);
 
 *,
 *::before,
@@ -10,6 +11,7 @@ $font-color: hsl(0, 0%, 10%);
 }
 
 body {
+  background: $background-color;
   color: $font-color;
   font-family: "Quicksand", sans-serif;
   display: flex;
@@ -81,14 +83,18 @@ body {
         padding: 0.2em 0.5em;
         outline: crimson 1px solid;
         font-size: 1.4em;
+        border: none;
+        background-color: transparent;
+        color: $font-color;
       }
       button {
         @extend input;
         cursor: pointer;
         border: none;
+        color: $font-color;
         &:hover {
           outline: $font-color 1px solid;
-          color: white;
+          color: transparent;
           background-color: $primary-color;
         }
       }
@@ -120,6 +126,8 @@ body {
         padding: 0.3rem 0.6rem;
         border: none;
         outline: 1px solid $primary-color;
+        background-color: transparent;
+        color: $font-color;
       }
     }
     button {
@@ -129,7 +137,7 @@ body {
       padding: 0.3rem 0.6rem;
       border: 1px solid $primary-color;
       cursor: pointer;
-      background: white;
+      background: transparent;
       font-weight: 600;
       &:hover {
         border: 1px solid $secondary-color;
