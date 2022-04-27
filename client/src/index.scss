@@ -94,7 +94,7 @@ body {
         color: $font-color;
         &:hover {
           outline: $font-color 1px solid;
-          color: transparent;
+          color: $font-color;
           background-color: $primary-color;
         }
       }
@@ -140,10 +140,45 @@ body {
       background: transparent;
       font-weight: 600;
       &:hover {
-        border: 1px solid $secondary-color;
+        outline: $font-color 1px solid;
         color: white;
         background: $primary-color;
       }
     }
+  }
+  .spinner-container {
+    position: relative;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $background-color;
+    .spinner {
+      background: $primary-color;
+      height: 2em;
+      width: 4px;
+      border-radius: 100vw;
+      animation: spin 250ms infinite;
+    }
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(72deg);
+  }
+  40% {
+    transform: rotate(144deg);
+  }
+  60% {
+    transform: rotate(216deg);
+  }
+  80% {
+    transform: rotate(288deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

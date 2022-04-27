@@ -1,13 +1,35 @@
 import { FaSignInAlt } from "react-icons/fa"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { register, reset } from "../features/auth/authSlice"
+import Spinner from "../components/Spinner"
 
 function Register() {
   const [registerData, setRegisterData] = useState({
     name: "",
-    password1: "",
+    password: "",
     password2: "",
   })
-  const { name, password1, password2 } = registerData
+  const { name, password, password2 } = registerData
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  )
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+    if (isSuccess || user) {
+      navigate("/")
+    }
+    dispatch(reset())
+  }, [user, isSuccess, isError, message, dispatch, navigate])
+
   const onChange = (e) => {
     setRegisterData((prevState) => ({
       ...prevState,
@@ -16,6 +38,15 @@ function Register() {
   }
   const onSubmit = (e) => {
     e.preventDefault()
+    if (password !== password2) {
+      toast.error("Password do not match")
+    } else {
+      const userData = { name, password }
+      dispatch(register(userData))
+    }
+  }
+  if (isLoading) {
+    return <Spinner />
   }
   return (
     <div className="register">
@@ -35,13 +66,13 @@ function Register() {
           />
         </div>
         <div className="input">
-          <label htmlFor="password1">Password </label>
+          <label htmlFor="password">Password </label>
           <input
             type="password"
-            id="password1"
+            id="password"
             placeholder="Enter your password..."
-            name="password1"
-            value={password1}
+            name="password"
+            value={password}
             onChange={onChange}
           />
         </div>
