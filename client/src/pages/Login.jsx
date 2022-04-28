@@ -60,7 +60,9 @@ function Login() {
           onChange={onChange}
           placeholder="Password..."
         />
-        <button type="submit">Login</button>
+        <button type="submit" className="submit-btn">
+          Login
+        </button>
       </form>
     </div>
   )

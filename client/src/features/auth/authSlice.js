@@ -4,6 +4,8 @@ import authService from "./authService"
 //Get token from local storage
 const user = JSON.parse(localStorage.getItem("user"))
 
+//initial state
+
 const initialState = {
   user: user ? user : null,
   isLoading: false,

@@ -87,7 +87,9 @@ function Register() {
             onChange={onChange}
           />
         </div>
-        <button type="submit">SignIn</button>
+        <button type="submit" className="submit-btn">
+          SignIn
+        </button>
       </form>
     </div>
   )

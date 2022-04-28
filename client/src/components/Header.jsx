@@ -18,23 +18,18 @@ function Header() {
     <header>
       <div className="logo">
         <Link to="/">
-          <FaDashcube />
+          <FaDashcube /> <p>Dashboard</p>
         </Link>
       </div>
       <ul>
         {user ? (
           <li>
-            <button onClick={onLogout}>
+            <button onClick={onLogout} className="logout-btn">
               <FaSignOutAlt /> Logout
             </button>
           </li>
         ) : (
           <>
-            <li>
-              <Link to="/categories">
-                <FaDashcube /> Dashboard
-              </Link>
-            </li>
             <li>
               <Link to="/register">
                 <FaUser /> SingIn
