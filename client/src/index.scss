@@ -2,6 +2,7 @@ $primary-color: crimson;
 $secondary-color: #333;
 $font-color: hsl(0, 0%, 89%);
 $background-color: hsl(245, 10%, 11%);
+$footer-color: hsl(245, 10%, 16%);
 
 *,
 *::before,
@@ -32,7 +33,7 @@ body {
     border-bottom: 2px solid $primary-color;
     .logo {
       color: $primary-color;
-      font-size: 3em;
+      font-size: 2em;
       width: 30%;
       text-align: center;
       line-height: 100%;
@@ -41,10 +42,25 @@ body {
         color: inherit;
       }
     }
+    button {
+      background: $secondary-color;
+      border: 1px solid $primary-color;
+      padding: 0.2em 0.7em;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      display: block;
+      transition: background 250ms ease-in-out;
+      &:hover {
+        background: $primary-color;
+        border: 1px solid $font-color;
+      }
+    }
     ul {
       width: 70%;
       list-style: none;
       font-size: 1.2em;
+      letter-spacing: 0.4px;
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -105,13 +121,14 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #333;
+    background: $footer-color;
     color: white;
     text-align: center;
     height: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.8rem;
   }
   .register {
     .input {
@@ -156,7 +173,7 @@ body {
     .spinner {
       background: $primary-color;
       height: 2em;
-      width: 4px;
+      width: 10px;
       border-radius: 100vw;
       animation: spin 250ms infinite;
     }

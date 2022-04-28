@@ -1,28 +1,52 @@
-import { FaMoneyBill, FaUser, FaSignInAlt } from "react-icons/fa"
-import { Link } from "react-router-dom"
+import { FaUser, FaSignInAlt, FaSignOutAlt, FaDashcube } from "react-icons/fa"
+import { Link, useNavigate } from "react-router-dom"
+import { logout, reset } from "../features/auth/authSlice"
+import { useSelector, useDispatch } from "react-redux"
 
 function Header() {
+  const { user } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const onLogout = (e) => {
+    dispatch(logout())
+    dispatch(reset())
+    navigate("/")
+  }
+
   return (
     <header>
       <div className="logo">
         <Link to="/">
-          <FaMoneyBill />
+          <FaDashcube />
         </Link>
       </div>
       <ul>
-        <li>
-          <Link to="/categories">Catégories</Link>
-        </li>
-        <li>
-          <Link to="/register">
-            <FaUser /> SingIn
-          </Link>
-        </li>
-        <li>
-          <Link to="/login">
-            <FaSignInAlt /> Login
-          </Link>
-        </li>
+        {user ? (
+          <li>
+            <button onClick={onLogout}>
+              <FaSignOutAlt /> Logout
+            </button>
+          </li>
+        ) : (
+          <>
+            <li>
+              <Link to="/categories">
+                <FaDashcube /> Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/register">
+                <FaUser /> SingIn
+              </Link>
+            </li>
+            <li>
+              <Link to="/login">
+                <FaSignInAlt /> Login
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </header>
   )
