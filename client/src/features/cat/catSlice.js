@@ -11,7 +11,27 @@ const initialState = {
   message: "",
 }
 //Get user from local storage
-const user = JSON.parse(localStorage.getItem("user"))
+// const user = JSON.parse(localStorage.getItem("user"))
+
+//Create Cat
+
+export const createCat = createAsyncThunk(
+  "cat/createCat",
+  async (catData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await catService.createCategories(catData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
 //Get Cats
 
@@ -34,12 +54,7 @@ const catSlice = createSlice({
   name: "cat",
   initialState,
   reducers: {
-    reset: (state) => {
-      state.isError = false
-      state.isLoading = false
-      state.isSuccess = false
-      state.message = false
-    },
+    reset: (state) => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -47,11 +62,24 @@ const catSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getCat.fulfilled, (state, action) => {
+        state.cats = action.payload
         state.isLoading = false
         state.isSuccess = true
-        state.cats = action.payload
       })
       .addCase(getCat.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(createCat.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(createCat.fulfilled, (state, action) => {
+        state.cats.push(action.payload)
+        state.isLoading = false
+        state.isSuccess = true
+      })
+      .addCase(createCat.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

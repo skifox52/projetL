@@ -7,16 +7,19 @@ $footer-color: hsl(245, 10%, 16%);
 *,
 *::before,
 *::after {
+  $background-color: hsl(245, 10%, 11%);
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
 body {
+  overflow-x: hidden;
   background: $background-color;
   color: $font-color;
   font-family: "Quicksand", sans-serif;
+  padding: 5em 0 2em 0;
   display: flex;
-  align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
@@ -32,11 +35,12 @@ body {
     width: 100vw;
     height: 3.2em;
     border-bottom: 2px solid $primary-color;
+    background-color: $background-color;
   }
   .logo {
     color: $primary-color;
     font-size: 2em;
-    width: 50%;
+    width: 65%;
     text-align: center;
     line-height: 100%;
     cursor: pointer;
@@ -54,10 +58,10 @@ body {
     }
   }
   .logout-btn {
-    background: $secondary-color;
+    background: transparent;
     border: 1px solid $primary-color;
     color: $font-color;
-    padding: 0.4em 0.7em;
+    padding: 0.2em 0.4em;
     border-radius: 5px;
     font-weight: 600;
     font-size: 1em;
@@ -72,7 +76,7 @@ body {
     }
   }
   ul {
-    width: 50%;
+    width: 35%;
     list-style: none;
     font-size: 1.2em;
     letter-spacing: 0.4px;
@@ -124,7 +128,7 @@ body {
   }
 }
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -132,6 +136,7 @@ footer {
   color: white;
   text-align: center;
   height: 2em;
+  margin-top: 3em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,21 +180,146 @@ footer {
   }
 }
 .spinner-container {
-  position: relative;
-  inset: 0;
   display: flex;
   align-items: center;
+  position: absolute;
+  inset: 0;
   justify-content: center;
   background-color: $background-color;
   .spinner {
+    position: relative;
+    display: block;
     background: $primary-color;
+    height: 2.5em;
+    width: 2.5em;
+    background-color: transparent;
+    border: 0.5em solid $primary-color;
+    border-radius: 50%;
+    animation: spin 350ms infinite;
+    &::before {
+      content: "";
+      display: block;
+      width: 0.5em;
+      height: 3em;
+      background: $background-color;
+      top: 0;
+      left: 0;
+      transform: translate(100%, -25%);
+    }
+  }
+}
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100vw;
+  .show-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 15em;
+    background: $background-color;
+    color: $font-color;
+    border: none;
+    cursor: pointer;
     height: 2em;
-    width: 10px;
-    border-radius: 100vw;
-    animation: spin 250ms infinite;
+    font-size: 1.05em;
+    text-align: center;
+    line-height: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid $primary-color;
+    transition: opacity 150ms ease-in-out;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  form {
+    .form-control {
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0.5em 0;
+      label {
+        font-size: 1.2em;
+        letter-spacing: 1px;
+      }
+      input {
+        width: 15em;
+        outline: 1px solid $primary-color;
+        background: transparent;
+        border: none;
+        color: $font-color;
+        font-size: 1;
+        padding: 0.2em 0.3em;
+      }
+    }
+    button {
+      width: 15em;
+      outline: 1px solid $primary-color;
+      background: transparent;
+      border: none;
+      color: $font-color;
+      font-size: 1;
+      padding: 0.4em 0.3em;
+      display: block;
+      margin: 0 auto;
+      margin-top: 1.3em;
+      cursor: pointer;
+      transition: all 250ms ease-in-out;
+      &:hover {
+        background: $primary-color;
+        outline: 1px solid $font-color;
+      }
+    }
+  }
+}
+.single-cat-container {
+  display: flex;
+  border: 1px solid $primary-color;
+  align-items: center;
+  border-radius: 5px;
+  justify-content: space-between;
+  width: 15em;
+  padding: 1em;
+  .single-cat {
+    h1 {
+      letter-spacing: 1px;
+      font-weight: 800;
+      color: $primary-color;
+    }
+    h3 {
+      font-weight: 400;
+      span {
+        color: #50eb57;
+      }
+    }
+    p {
+      font-weight: 300;
+      font-size: 0.8em;
+    }
+  }
+  .trash {
+    background-color: transparent;
+    color: $font-color;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 
+.cats {
+  padding: 2em 4em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5em;
+}
+.welcome {
+  padding-left: 4em;
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -213,5 +343,9 @@ footer {
 @media only screen and (max-width: 500px) {
   header {
     font-size: 0.7em;
+    width: 35%;
+    ul {
+      width: 65%;
+    }
   }
 }
