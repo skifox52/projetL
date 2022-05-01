@@ -22,9 +22,20 @@ const createCategories = async (catData, token) => {
   return response.data
 }
 
+const deleteCategorie = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  const response = await axios.delete(API_URI + id, config)
+  return response.data
+}
+
 const catService = {
   getCategories,
   createCategories,
+  deleteCategorie,
 }
 
 export default catService

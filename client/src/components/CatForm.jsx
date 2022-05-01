@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
-import { FaArrowDown } from "react-icons/fa"
+import { FaArrowDown, FaArrowUp } from "react-icons/fa"
 import { createCat } from "../features/cat/catSlice"
-import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
 
 function CatForm() {
@@ -19,6 +18,7 @@ function CatForm() {
   })
   const { name, amount } = inputData
   const [FormShow, setFormShow] = useState(false)
+  const [isClosed, setIsClosed] = useState(true)
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -32,13 +32,21 @@ function CatForm() {
   }
   const showForm = (e) => {
     setFormShow(!FormShow)
+    setIsClosed(!isClosed)
   }
 
   return (
     <>
-      <button className="show-form" onClick={showForm}>
-        Ajouter une catégorie <FaArrowDown />
-      </button>
+      {isClosed && (
+        <button className="show-form" onClick={showForm}>
+          Ajouter une catégorie <FaArrowDown />
+        </button>
+      )}
+      {!isClosed && (
+        <button className="show-form" onClick={showForm}>
+          Cacher le formulaire <FaArrowUp />
+        </button>
+      )}
 
       {FormShow && (
         <form onSubmit={onSubmit}>

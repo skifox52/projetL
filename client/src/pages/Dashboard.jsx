@@ -31,8 +31,12 @@ function Dashboard() {
   return (
     <>
       <section className="welcome">
-        <h1>Bienvenue {user && user.name}</h1>
-        <h3>Nombre de catégories: {cats.length}</h3>
+        <h1>
+          Bienvenue <span className="username">{user && user.name}</span>
+        </h1>
+        <h3>
+          Nombre de catégories: <span className="number">{cats.length}</span>
+        </h3>
       </section>
       <div className="dashboard">
         <CatForm />
@@ -43,7 +47,7 @@ function Dashboard() {
             ))}
           </div>
         ) : (
-          <h3>No data!</h3>
+          <h3 style={{ textAlign: "center", marginTop: "4em" }}>No data!</h3>
         )}
       </div>
     </>
