@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { FaArrowDown, FaArrowUp } from "react-icons/fa"
+import { FaChevronDown, FaChevronUp } from "react-icons/fa"
 import { createCat } from "../features/cat/catSlice"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -37,14 +37,13 @@ function CatForm() {
 
   return (
     <>
-      {isClosed && (
+      {isClosed ? (
         <button className="show-form" onClick={showForm}>
-          Ajouter une catégorie <FaArrowDown />
+          Ajouter une catégorie <FaChevronDown />
         </button>
-      )}
-      {!isClosed && (
+      ) : (
         <button className="show-form" onClick={showForm}>
-          Cacher le formulaire <FaArrowUp />
+          Cacher le formulaire <FaChevronUp />
         </button>
       )}
 
@@ -72,7 +71,7 @@ function CatForm() {
               onChange={onChange}
             />
           </div>
-          <button type="submit">Add</button>
+          <button type="submit">Ajouter</button>
         </form>
       )}
     </>

@@ -5,6 +5,7 @@ import SingleCat from "../components/SingleCat"
 import { reset, getCat } from "../features/cat/catSlice"
 import Spinner from "../components/Spinner"
 import CatForm from "../components/CatForm"
+import InputForm from "../components/InputForm"
 
 function Dashboard() {
   const { user } = useSelector((state) => state.auth)
@@ -39,7 +40,14 @@ function Dashboard() {
         </h3>
       </section>
       <div className="dashboard">
-        <CatForm />
+        <div className="form-container">
+          <div className="first-form">
+            <CatForm />
+          </div>
+          <div className="second-form">
+            <InputForm />
+          </div>
+        </div>
         {cats.length > 0 ? (
           <div className="cats">
             {cats.map((cat) => (

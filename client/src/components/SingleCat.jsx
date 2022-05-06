@@ -1,4 +1,4 @@
-import { FaTrash } from "react-icons/fa"
+import { FaTrash, FaInfo } from "react-icons/fa"
 import { confirmAlert } from "react-confirm-alert"
 import "react-confirm-alert/src/react-confirm-alert.css"
 import { useDispatch } from "react-redux"
@@ -34,9 +34,15 @@ function SingleCat({ cat }) {
         </h3>
         <p>{new Date(cat.date).toLocaleString("fr-FR")}</p>
       </section>
-      <button className="trash" onClick={onDelete}>
-        <FaTrash />
-      </button>
+      <div className="buttons-container">
+        <button className="icon-btn" onClick={onDelete}>
+          <FaTrash />
+        </button>
+
+        <button className="icon-btn">
+          <FaInfo />
+        </button>
+      </div>
     </div>
   )
 }

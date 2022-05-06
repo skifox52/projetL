@@ -213,6 +213,69 @@ footer {
   flex-direction: column;
   justify-content: center;
   width: 100vw;
+  .form-container {
+    display: flex;
+    justify-content: center;
+    gap: 2.5em;
+    padding: 0.6em 2em;
+  }
+  .detail-container {
+    height: max-content;
+    width: 80vw;
+    .close {
+      position: absolute;
+      top: 0.4em;
+      right: 0.8em;
+      font-size: 2em;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    background: $footer-color;
+    display: flex;
+    margin: 5em;
+    border: 1px solid $font-color;
+    border-radius: 10px;
+    .details {
+      width: 60%;
+      height: 100%;
+      .amount {
+        color: #50eb57;
+        height: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $background-color;
+        border-radius: 0 0 10px 10px;
+        span {
+          color: $font-color;
+        }
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1em;
+        height: max-content;
+        input[type="number"] {
+          padding: 0.4em 0.1em;
+          width: 60%;
+          outline: 1px solid $primary-color;
+          font-size: 0.85em;
+          margin-bottom: 0.6em;
+          background-color: transparent;
+          border: none;
+          color: $font-color;
+        }
+      }
+    }
+  }
   .show-form {
     display: flex;
     align-items: center;
@@ -229,6 +292,7 @@ footer {
     margin: 0 auto;
     border-bottom: 1px solid $primary-color;
     transition: opacity 150ms ease-in-out;
+    padding: 0 0.2em;
     &:hover {
       opacity: 0.7;
     }
@@ -243,6 +307,7 @@ footer {
       label {
         font-size: 1.2em;
         letter-spacing: 1px;
+        margin: 0.2em auto;
       }
       input {
         width: 15em;
@@ -250,8 +315,7 @@ footer {
         background: transparent;
         border: none;
         color: $font-color;
-        font-size: 1;
-        padding: 0.2em 0.3em;
+        padding: 0.4em 0.3em;
       }
     }
     button {
@@ -282,6 +346,7 @@ footer {
   justify-content: space-between;
   width: 15em;
   padding: 1em;
+  background: $footer-color;
   .single-cat {
     h1 {
       letter-spacing: 1px;
@@ -299,14 +364,25 @@ footer {
       font-size: 0.8em;
     }
   }
-  .trash {
-    background-color: transparent;
-    color: $font-color;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2em;
-    &:hover {
-      opacity: 0.7;
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    .icon-btn {
+      background-color: transparent;
+      color: $font-color;
+      border: none;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+    .edit-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
@@ -347,25 +423,29 @@ footer {
   }
 }
 @media only screen and (max-width: 500px) {
-  header {
-    font-size: 0.7em;
-    width: 35%;
-    ul {
-      width: 65%;
+  body {
+    overflow-x: hidden;
+    header {
+      font-size: 0.7em;
+      width: 100vw;
+      ul {
+        width: 65%;
+      }
     }
-  }
-  .welcome {
-    padding-left: 1em;
-  }
-  .dashboard {
-    .cats {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 2em;
-      .single-cat-container {
-        width: 75%;
+    .welcome {
+      padding-left: 1em;
+    }
+    .dashboard {
+      .cats {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2em;
+        .single-cat-container {
+          padding: 0.2em 0.8em;
+          width: 75%;
+        }
       }
     }
   }
