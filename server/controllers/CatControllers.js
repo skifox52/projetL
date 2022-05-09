@@ -33,9 +33,13 @@ export const putRouter = asyncHandler(async (req, res) => {
 
   const catData = await Model.findById(id)
   if (catData) {
-    const { name, amount } = req.body
-    if (!name || !amount) throw new Error("Empty field!")
-    const newCat = await Model.findByIdAndUpdate(id, req.body, { new: true })
+    const { amount } = req.body
+    if (!amount) throw new Error("Empty field!")
+    const newCat = await Model.findByIdAndUpdate(
+      id,
+      { $inc: { amount } },
+      { new: true }
+    )
     res.status(202).json(newCat)
   } else {
     res.status(400)

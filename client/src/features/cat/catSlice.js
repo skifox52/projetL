@@ -33,6 +33,26 @@ export const createCat = createAsyncThunk(
   }
 )
 
+//Update Cat
+
+export const updateCat = createAsyncThunk(
+  "cat/updateCat",
+  async ({ id, catData }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await catService.updateCat(id, catData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 //Delete Cat
 export const deleteCat = createAsyncThunk(
   "cat/deleteCat",
@@ -47,7 +67,7 @@ export const deleteCat = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString()
-      thunkAPI.rejectWithValue(message)
+      return thunkAPI.rejectWithValue(message)
     }
   }
 )
@@ -112,6 +132,23 @@ const catSlice = createSlice({
         state.cats = state.cats.filter((cat) => cat._id !== action.payload._id)
       })
       .addCase(deleteCat.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateCat.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(updateCat.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        const index = state.cats.findIndex(
+          (cat) => cat._id === action.payload._id
+        )
+        if (state.cats[index].amount === undefined) state.cats[index].amount = 0
+        state.cats[index].amount = action.payload.amount
+      })
+      .addCase(updateCat.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

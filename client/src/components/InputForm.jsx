@@ -1,3 +1,4 @@
+import React from "react"
 import { useState, useEffect } from "react"
 import {
   FaChevronDown,
@@ -5,17 +6,19 @@ import {
   FaRegArrowAltCircleLeft,
 } from "react-icons/fa"
 import { useDispatch, useSelector } from "react-redux"
+import { updateCat } from "../features/cat/catSlice"
+import { toast } from "react-toastify"
 
 function InputForm() {
   const { isError, message, cats } = useSelector((state) => state.cat)
-
+  const dispatch = useDispatch()
   useEffect(() => {
     if (isError) {
       console.error(message)
     }
   }, [isError, message])
-  //   const dispatch = useDispatch()
-  const [amount, setAmount] = useState()
+
+  const [amount, setAmount] = useState("")
   const [FormShow, setFormShow] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
   const [detail, setDetail] = useState(false)
@@ -27,9 +30,10 @@ function InputForm() {
       [e.target.name]: e.target.value,
     }))
   }
-
   const onSubmit = (e) => {
     e.preventDefault()
+    if (amount === "") return toast.error("Veuillez remplir votre champ")
+
     setDetail(true)
   }
   const showForm = (e) => {
@@ -41,12 +45,25 @@ function InputForm() {
   }
   const submitDetails = (e) => {
     e.preventDefault()
+    if (sumAmount > amount) {
+      return toast.error("Montant insuffisant...")
+    } else if (sumAmount < amount) {
+      return toast.error("Montant pas consommé, veuillez rajouter des dépenses")
+    } else {
+      cats.forEach((cat, index) => {
+        const inputAmount = Object.entries(addAmount)[index][1] //le prb c ke larray de valeurs n'est pas ordoné
+        const catData = { amount: inputAmount }
+        dispatch(updateCat({ id: cat._id, catData }))
+        console.log(catData)
+      })
+    }
   }
+
   const sumAmount = Object.values(addAmount).reduce(
-    (a, b) => parseInt(a) + parseInt(b),
+    (a, b) => parseInt(a === "" ? 0 : a) + parseInt(b === "" ? 0 : b),
     0
   )
-
+  const activeAmount = parseInt(amount) - parseInt(sumAmount)
   return (
     <>
       {detail && (
@@ -56,12 +73,17 @@ function InputForm() {
             <div className="details">
               <div className="amount">
                 <h1>
-                  {parseInt(amount) - sumAmount} <span>DZD</span>
+                  {activeAmount <= 0 ? (
+                    <span className="neg-amount">{activeAmount}</span>
+                  ) : (
+                    activeAmount
+                  )}{" "}
+                  <span>DZD</span>
                 </h1>
               </div>
               <form onSubmit={submitDetails}>
                 {cats.map((cat, index) => (
-                  <>
+                  <React.Fragment key={index + 5}>
                     <h4 key={cat._id}>{cat.name}</h4>
                     <input
                       type="number"
@@ -72,7 +94,7 @@ function InputForm() {
                       placeholder="Entrer un montant..."
                       onChange={onChange}
                     />
-                  </>
+                  </React.Fragment>
                 ))}
                 <button type="submit">submit</button>
               </form>
