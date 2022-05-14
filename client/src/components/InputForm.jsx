@@ -16,14 +16,20 @@ function InputForm() {
     if (isError) {
       console.error(message)
     }
-  }, [isError, message])
+    cats.forEach((cat) =>
+      setAddAmount((prevState) => ({
+        ...prevState,
+        [cat.name]: "",
+      }))
+    )
+  }, [isError, message, cats])
 
   const [amount, setAmount] = useState("")
   const [FormShow, setFormShow] = useState(false)
   const [isClosed, setIsClosed] = useState(true)
   const [detail, setDetail] = useState(false)
   const [addAmount, setAddAmount] = useState({})
-
+  console.log(addAmount)
   const onChange = (e) => {
     setAddAmount((prevState) => ({
       ...prevState,
@@ -51,10 +57,10 @@ function InputForm() {
       return toast.error("Montant pas consommé, veuillez rajouter des dépenses")
     } else {
       cats.forEach((cat, index) => {
-        const inputAmount = Object.entries(addAmount)[index][1] //le prb c ke larray de valeurs n'est pas ordoné
+        const inputAmount = Object.values(addAmount)[index]
         const catData = { amount: inputAmount }
         dispatch(updateCat({ id: cat._id, catData }))
-        console.log(catData)
+        console.log(inputAmount)
       })
     }
   }

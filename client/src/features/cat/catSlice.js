@@ -145,7 +145,6 @@ const catSlice = createSlice({
         const index = state.cats.findIndex(
           (cat) => cat._id === action.payload._id
         )
-        if (state.cats[index].amount === undefined) state.cats[index].amount = 0
         state.cats[index].amount = action.payload.amount
       })
       .addCase(updateCat.rejected, (state, action) => {

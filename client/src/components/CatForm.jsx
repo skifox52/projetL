@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"
 import { createCat } from "../features/cat/catSlice"
 import { useDispatch, useSelector } from "react-redux"
+import { toast } from "react-toastify"
 
 function CatForm() {
   const { isError, message } = useSelector((state) => state.cat)
@@ -22,6 +23,10 @@ function CatForm() {
 
   const onSubmit = (e) => {
     e.preventDefault()
+    if (!name || !amount) {
+      toast.error("Veuillez remplir vos champs!")
+      return
+    }
     dispatch(createCat({ name: name.toString(), amount: parseInt(amount) }))
   }
   const onChange = (e) => {

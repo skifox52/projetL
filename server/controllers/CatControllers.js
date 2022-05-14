@@ -15,7 +15,7 @@ export const getRouter = asyncHandler(async (req, res) => {
 //Post category
 export const postRouter = asyncHandler(async (req, res) => {
   const { name, amount } = req.body
-  if (!name || !amount) {
+  if (!name) {
     res.status(400)
     throw new Error("Empty field!")
   }
